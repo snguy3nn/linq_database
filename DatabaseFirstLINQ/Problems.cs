@@ -21,8 +21,8 @@ namespace DatabaseFirstLINQ
             //ProblemFour();
             //ProblemFive();
             //ProblemSix();
-            ProblemSeven();
-            //ProblemEight();
+            //ProblemSeven();
+            ProblemEight();
             //ProblemNine();
             //ProblemTen();
             //ProblemEleven();
@@ -111,7 +111,6 @@ namespace DatabaseFirstLINQ
             var users = _context.Users;
             var after2016before2018 = users.Where(a => a.RegistrationDate.Value.Year >= 2016 && a.RegistrationDate.Value.Year <= 2018);
 
-
             foreach (var user in after2016before2018)
             {
                 Console.WriteLine(user.Email + user.RegistrationDate);
@@ -126,18 +125,24 @@ namespace DatabaseFirstLINQ
             // Write a LINQ query that retreives all of the users who are assigned to the role of Customer.
             // Then print the users email and role name to the console.
             var customerUsers = _context.UserRoles.Include(ur => ur.Role).Include(ur => ur.User).Where(ur => ur.Role.RoleName == "Customer");
+
             foreach (UserRole userRole in customerUsers)
             {
                 Console.WriteLine($"Email: {userRole.User.Email} Role: {userRole.Role.RoleName}");
             }
         }
 
-        //        private void ProblemEight()
-        //        {
-        //            // Write a LINQ query that retreives all of the products in the shopping cart of the user who has the email "afton@gmail.com".
-        //            // Then print the product's name, price, and quantity to the console.
+        private void ProblemEight()
+        {
+            // Write a LINQ query that retreives all of the products in the shopping cart of the user who has the email "afton@gmail.com".
+            // Then print the product's name, price, and quantity to the console.
+            var shoppingCartProducts = _context.ShoppingCarts.Include(p => p.Product).Where(e => e.User.Email == "afton@gmail.com");
 
-        //        }
+            foreach (ShoppingCart product in shoppingCartProducts)
+            {
+                Console.WriteLine($"Name: {product.Product.Name} Price: {product.Product.Price} Quantity: {product.Quantity}");
+            }
+        }
 
         //        private void ProblemNine()
         //        {
