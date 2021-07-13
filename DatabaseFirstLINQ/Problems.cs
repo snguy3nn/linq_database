@@ -25,8 +25,8 @@ namespace DatabaseFirstLINQ
             //ProblemEight();
             //ProblemNine();
             //ProblemTen();
-            ProblemEleven();
-            //ProblemTwelve();
+            //ProblemEleven();
+            ProblemTwelve();
             //ProblemThirteen();
             //ProblemFourteen();
             //ProblemFifteen();
@@ -153,17 +153,23 @@ namespace DatabaseFirstLINQ
 
             {
                 Console.WriteLine($"Total Price: {shoppingCartProducts}");
-            }
-            
-
+            }          
         }
 
         private void ProblemTen()
         {
             // Write a LINQ query that retreives all of the products in the shopping cart of users who have the role of "Employee".
             // Then print the user's email as well as the product's name, price, and quantity to the console.
-            var employeeUsers = _context.UserRoles.Include(ur => ur.Role).Include(ur => ur.User).Where(ur => ur.Role.RoleName == "Employee").Select(u => u.User.Id);
-            var shoppingCartProducts = _context.ShoppingCarts.Include(p => p.Product).Include(u => u.User).Where(p => employeeUsers.Contains(p.UserId));
+            var employeeUsers = _context.UserRoles
+                .Include(ur => ur.Role)
+                .Include(ur => ur.User)
+                .Where(ur => ur.Role.RoleName == "Employee")
+                .Select(u => u.User.Id);
+
+            var shoppingCartProducts = _context.ShoppingCarts
+                .Include(p => p.Product)
+                .Include(u => u.User)
+                .Where(p => employeeUsers.Contains(p.UserId));
 
             foreach (var shopping in shoppingCartProducts)
             {
@@ -187,11 +193,16 @@ namespace DatabaseFirstLINQ
             _context.SaveChanges();
         }
 
-        //        private void ProblemTwelve()
-        //        {
-        //            // Create a new Product object and add that product to the Products table using LINQ.
-
-        //        }
+        private void ProblemTwelve()
+        {
+            // Create a new Product object and add that product to the Products table using LINQ.
+            Product newProduct = new Product()
+            {
+                Name = "Macbook Pro 2021"
+            };
+            _context.Products.Add(newProduct);
+            _context.SaveChanges();
+        }
 
         //        private void ProblemThirteen()
         //        {
