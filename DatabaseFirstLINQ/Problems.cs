@@ -27,8 +27,8 @@ namespace DatabaseFirstLINQ
             //ProblemTen();
             //ProblemEleven();
             //ProblemTwelve();
-            ProblemThirteen();
-            //ProblemFourteen();
+            //ProblemThirteen();
+            ProblemFourteen();
             //ProblemFifteen();
             //ProblemSixteen();
             //ProblemSeventeen();
@@ -218,22 +218,30 @@ namespace DatabaseFirstLINQ
             _context.SaveChanges();
         }
 
-        //        private void ProblemFourteen()
-        //        {
-        //            // Add the product you create to the user we created in the ShoppingCart junction table using LINQ.
+        private void ProblemFourteen()
+        {
+            // Add the product you create to the user we created in the ShoppingCart junction table using LINQ.
+            var productId = _context.Products.Where(p => p.Name == "Macbook Pro 2021").Select(p => p.Id).FirstOrDefault();
+            var userId = _context.Users.Where(u => u.Email == "david@gmail.com").Select(u => u.Id).FirstOrDefault();
+            ShoppingCart newProduct = new ShoppingCart()
+            {
+                ProductId = productId,
+                UserId = userId
+            };
+            _context.ShoppingCarts.Add(newProduct);
+            _context.SaveChanges();
+        }
 
-        //        }
+        // <><> U Actions (Update) <><>
 
-        //        // <><> U Actions (Update) <><>
-
-        //        private void ProblemFifteen()
-        //        {
-        //            // Update the email of the user we created to "mike@gmail.com"
-        //            var user = _context.Users.Where(u => u.Email == "david@gmail.com").SingleOrDefault();
-        //            user.Email = "mike@gmail.com";
-        //            _context.Users.Update(user);
-        //            _context.SaveChanges();
-        //        }
+        //private void ProblemFifteen()
+        //{
+        //    // Update the email of the user we created to "mike@gmail.com"
+        //    var user = _context.Users.Where(u => u.Email == "david@gmail.com").SingleOrDefault();
+        //    user.Email = "mike@gmail.com";
+        //    _context.Users.Update(user);
+        //    _context.SaveChanges();
+        //}
 
         //        private void ProblemSixteen()
         //        {
